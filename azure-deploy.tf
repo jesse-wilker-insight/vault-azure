@@ -48,10 +48,10 @@ module "vault-ent" {
   key_vault_id = data.azurerm_key_vault.key_vault_id.id
 
   # Key Vault Certificate containing TLS certificate for load balancer
-  key_vault_ssl_cert_secret_id = "https://dev-vault-9d01d0ac1684b3.vault.azure.net/secrets/dev-vault-cert/4ed48c2546ae4a93a0a3552520d3f404"
+  key_vault_ssl_cert_secret_id = "https://dev-vault-9d01d0ac1684b3.vault.azure.net/secrets/dev-vault-cert/a547e5725d0b4251be2df78b2153569b"
 
   # Key Vault Secret containing TLS certificate for Vault VMs
-  key_vault_vm_tls_secret_id = "https://dev-vault-9d01d0ac1684b3.vault.azure.net/secrets/dev-vault-vm-tls/161e3a650deb47ffa15ad17cd5642c00"
+  key_vault_vm_tls_secret_id = "https://dev-vault-9d01d0ac1684b3.vault.azure.net/secrets/dev-vault-vm-tls/00b1e629dcf04394b19f76cbe83491d2"
 
   # Resource group object in which resources will be deployed
   resource_group = {
