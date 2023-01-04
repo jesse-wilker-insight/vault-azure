@@ -26,8 +26,7 @@ data "azurerm_key_vault" "key_vault_id" {
 
 
 module "vault-ent" {
-  source  = "hashicorp/vault-ent-starter/azure"
-  version = "~> 1.0"
+  source  = "github.com/Insight-NA/terraform-azure-vault-ent"
 
   # (Required when cert in 'key_vault_vm_tls_secret_id' is signed by a private CA) Certificate authority cert (PEM)
   lb_backend_ca_cert = file("./ca.pem")
