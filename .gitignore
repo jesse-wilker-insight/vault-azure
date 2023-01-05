@@ -35,3 +35,4 @@ terraform.rc
 
 # Certificates
 *.pem
+*.hclic
