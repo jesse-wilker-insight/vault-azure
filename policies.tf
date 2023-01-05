@@ -31,21 +31,21 @@ resource "vault_policy" "admin_policy_engineering" {
 resource "vault_policy" "admin_policy_education" {
   namespace = vault_namespace.education.path
   name   = "admins"
-  policy = file("policies/admin-policy.hcl")
+  policy = file("policies/admin-edu-policy.hcl")
 }
 
 # Create admin policy in the 'education/training' namespace
 resource "vault_policy" "admin_policy_training" {
   namespace = vault_namespace.training.path_fq
   name   = "admins"
-  policy = file("policies/admin-policy.hcl")
+  policy = file("policies/admin-training-policy.hcl")
 }
 
 # Create admin policy in the 'education/training/vault_cloud' namespace
 resource "vault_policy" "admin_policy_vault_cloud" {
   namespace = vault_namespace.vault_cloud.path_fq
   name   = "admins"
-  policy = file("policies/admin-policy.hcl")
+  policy = file("policies/admin-training-policy.hcl")
 }
 
 # Create admin policy in the 'education/training/boundary' namespace

@@ -1,10 +1,29 @@
 #----------------------------------------------------------
 # Enable secrets engines
 #----------------------------------------------------------
+
+resource "vault_mount" "kvv2" {
+  path        = "kvv2"
+  type        = "kv"
+  options     = { version = "2" }
+  description = "KV Version 2 secret engine mount"
+}
+resource "vault_kv_secret_v2" "secret" {
+  mount                      = vault_mount.kvv2.path
+  name                       = "secret"
+  cas                        = 1
+  delete_all_versions        = true
+  data_json                  = jsonencode(
+  {
+    zip       = "zap",
+    foo       = "bar"
+  }
+  )
+}
+
+
 # Enable kv-v2 secrets engine in the finance namespace
 resource "vault_mount" "kv-v2" {
-  # depends_on = [vault_namespace.finance]
-  # provider = vault.finance
   namespace = vault_namespace.finance.path
   path = "kv-v2"
   type = "kv-v2"
