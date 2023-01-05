@@ -29,7 +29,7 @@ module "vault-ent" {
   source  = "github.com/Insight-NA/terraform-azure-vault-ent"
 
   # (Required when cert in 'key_vault_vm_tls_secret_id' is signed by a private CA) Certificate authority cert (PEM)
-  lb_backend_ca_cert = file("./ca.pem")
+  lb_backend_ca_cert = file("./vault-ca.pem")
 
   # IP address (in Vault subnet) for Vault load balancer
   # (example value here is fine to use alongside the default values in the example vnet module)
