@@ -9,15 +9,15 @@ resource "vault_mount" "kvv2" {
   description = "KV Version 2 secret engine mount"
 }
 resource "vault_kv_secret_v2" "secret" {
-  mount                      = vault_mount.kvv2.path
-  name                       = "secret"
-  cas                        = 1
-  delete_all_versions        = true
-  data_json                  = jsonencode(
-  {
-    zip       = "zap",
-    foo       = "bar"
-  }
+  mount               = vault_mount.kvv2.path
+  name                = "secret"
+  cas                 = 1
+  delete_all_versions = true
+  data_json = jsonencode(
+    {
+      zip = "zap",
+      foo = "bar"
+    }
   )
 }
 
@@ -25,8 +25,8 @@ resource "vault_kv_secret_v2" "secret" {
 # Enable kv-v2 secrets engine in the finance namespace
 resource "vault_mount" "kv-v2" {
   namespace = vault_namespace.finance.path
-  path = "kv-v2"
-  type = "kv-v2"
+  path      = "kv-v2"
+  type      = "kv-v2"
 }
 
 # Transform secrets engine at root
@@ -37,26 +37,26 @@ resource "vault_mount" "mount_transform" {
 
 # Create an alphabet
 resource "vault_transform_alphabet" "numerics" {
-  path = vault_mount.mount_transform.path
-  name = "numerics"
+  path     = vault_mount.mount_transform.path
+  name     = "numerics"
   alphabet = "0123456789"
 }
 
 # Create a transformation template
 resource "vault_transform_template" "ccn" {
-  path = vault_mount.mount_transform.path
-  name = "ccn"
-  type = "regex"
-  pattern = "(\\d{4})-(\\d{4})-(\\d{4})-(\\d{4})"
+  path     = vault_mount.mount_transform.path
+  name     = "ccn"
+  type     = "regex"
+  pattern  = "(\\d{4})-(\\d{4})-(\\d{4})-(\\d{4})"
   alphabet = vault_transform_alphabet.numerics.name
 }
 
 # Create a transformation named ccn-fpe
 resource "vault_transform_transformation" "ccn-fpe" {
-  path = vault_mount.mount_transform.path
-  name = "ccn-fpe"
-  type = "fpe"
-  template = vault_transform_template.ccn.name
+  path         = vault_mount.mount_transform.path
+  name         = "ccn-fpe"
+  type         = "fpe"
+  template     = vault_transform_template.ccn.name
   tweak_source = "internal"
   # payments here listed by name and not reference to avoid circular dependency.
   # Vault does not require dependencies like these to exist prior to creating
@@ -67,8 +67,8 @@ resource "vault_transform_transformation" "ccn-fpe" {
 
 # Create a role named 'payments'
 resource "vault_transform_role" "payments" {
-  path = vault_mount.mount_transform.path
-  name = "payments"
+  path            = vault_mount.mount_transform.path
+  name            = "payments"
   transformations = [vault_transform_transformation.ccn-fpe.name]
 }
 
@@ -77,9 +77,9 @@ resource "vault_transform_role" "payments" {
 # Test the transformation
 #-------------------------------------------------------------------
 data "vault_transform_encode" "encoded" {
-  path = vault_transform_role.payments.path
+  path      = vault_transform_role.payments.path
   role_name = "payments"
-  value = "1111-2222-3333-4444"
+  value     = "1111-2222-3333-4444"
 
   depends_on = [vault_transform_role.payments]
 }

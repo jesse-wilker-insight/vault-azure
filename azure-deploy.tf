@@ -9,14 +9,14 @@ provider "azurerm" {
   }
 }
 data "azurerm_subnet" "lb-subnet-id" {
-  name = "dev-vault-lb"
+  name                 = "dev-vault-lb"
   virtual_network_name = "dev-vault"
-  resource_group_name = "dev-vault"
+  resource_group_name  = "dev-vault"
 }
 data "azurerm_subnet" "vm-subnet-id" {
-  name = "dev-vault"
+  name                 = "dev-vault"
   virtual_network_name = "dev-vault"
-  resource_group_name = "dev-vault"
+  resource_group_name  = "dev-vault"
 }
 data "azurerm_key_vault" "key_vault_id" {
   name                = "dev-vault-9d01d0ac1684b3"
@@ -26,7 +26,7 @@ data "azurerm_key_vault" "key_vault_id" {
 
 
 module "vault-ent" {
-  source  = "github.com/Insight-NA/terraform-azure-vault-ent"
+  source = "github.com/Insight-NA/terraform-azure-vault-ent"
 
   # (Required when cert in 'key_vault_vm_tls_secret_id' is signed by a private CA) Certificate authority cert (PEM)
   lb_backend_ca_cert = file("./vault-ca.pem")
@@ -72,10 +72,10 @@ module "vault-ent" {
   # Path to the Vault Enterprise license file
   vault_license_filepath = "./vault.hclic"
 
-# Scale set settings
+  # Scale set settings
   instance_count = 3
 
-# Disk sizing for the scale set
+  # Disk sizing for the scale set
   os_disk_type = "StandardSSD_LRS"
   os_disk_size = 256
 }
