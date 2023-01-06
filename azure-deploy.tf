@@ -71,4 +71,11 @@ module "vault-ent" {
 
   # Path to the Vault Enterprise license file
   vault_license_filepath = "./vault.hclic"
+
+# Scale set settings
+  instance_count = 3
+
+# Disk sizing for the scale set
+  os_disk_type = "StandardSSD_LRS"
+  os_disk_size = 256
 }
