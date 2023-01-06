@@ -33,7 +33,7 @@ module "vault-ent" {
 
   # IP address (in Vault subnet) for Vault load balancer
   # (example value here is fine to use alongside the default values in the example vnet module)
-  lb_private_ip_address = "10.0.2.253"
+  lb_private_ip_address = "10.0.2.250"
 
   # Virtual Network subnet for Vault load balancer
   lb_subnet_id = data.azurerm_subnet.lb-subnet-id.id
@@ -48,10 +48,10 @@ module "vault-ent" {
   key_vault_id = data.azurerm_key_vault.key_vault_id.id
 
   # Key Vault Certificate containing TLS certificate for load balancer
-  key_vault_ssl_cert_secret_id = "https://dev-vault-9d01d0ac1684b3.vault.azure.net/secrets/dev-vault-cert/a547e5725d0b4251be2df78b2153569b"
+  key_vault_ssl_cert_secret_id = "https://dev-vault-9d01d0ac1684b3.vault.azure.net/secrets/dev-vault-cert/777d7362674049679fb86e89b50237ff"
 
   # Key Vault Secret containing TLS certificate for Vault VMs
-  key_vault_vm_tls_secret_id = "https://dev-vault-9d01d0ac1684b3.vault.azure.net/secrets/dev-vault-vm-tls/00b1e629dcf04394b19f76cbe83491d2"
+  key_vault_vm_tls_secret_id = "https://dev-vault-9d01d0ac1684b3.vault.azure.net/secrets/dev-vault-vm-tls/5652db4c3d944e3cb3a88b04b4817318"
 
   # Resource group object in which resources will be deployed
   resource_group = {
@@ -60,7 +60,7 @@ module "vault-ent" {
   }
 
   # Prefix for resource names
-  resource_name_prefix = "dev1"
+  resource_name_prefix = "nsitlab"
 
   # SSH public key (authentication to Vault servers)
   # Follow steps on private/public key creation (https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys)
