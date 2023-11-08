@@ -9,18 +9,18 @@ provider "azurerm" {
   }
 }
 data "azurerm_subnet" "lb-subnet-id" {
-  name                 = "dev-vault-lb"
-  virtual_network_name = "dev-vault"
-  resource_group_name  = "dev-vault"
+  name                 = "demo-vault-lb"
+  virtual_network_name = "demo-vault"
+  resource_group_name  = "demo-vault"
 }
 data "azurerm_subnet" "vm-subnet-id" {
-  name                 = "dev-vault"
-  virtual_network_name = "dev-vault"
-  resource_group_name  = "dev-vault"
+  name                 = "demo-vault"
+  virtual_network_name = "demo-vault"
+  resource_group_name  = "demo-vault"
 }
 data "azurerm_key_vault" "key_vault_id" {
-  name                = "dev-vault-9d01d0ac1684b3"
-  resource_group_name = "dev-vault"
+  name                = "demo-vault-92033c51baf7"
+  resource_group_name = "demo-vault"
 }
 
 
@@ -48,26 +48,26 @@ module "vault-ent" {
   key_vault_id = data.azurerm_key_vault.key_vault_id.id
 
   # Key Vault Certificate containing TLS certificate for load balancer
-  key_vault_ssl_cert_secret_id = "https://dev-vault-9d01d0ac1684b3.vault.azure.net/secrets/dev-vault-cert/6f7ed13de8574c8196ff6ad80cacad7a"
+  key_vault_ssl_cert_secret_id = "https://demo-vault-92033c51baf7.vault.azure.net/secrets/demo-vault-cert/bf36f8ce92cb42d389da2c9ce094503e"
 
   # Key Vault Secret containing TLS certificate for Vault VMs
-  key_vault_vm_tls_secret_id = "https://dev-vault-9d01d0ac1684b3.vault.azure.net/secrets/dev-vault-vm-tls/a116fc01f8414be4bce6562fac4fd5fd"
+  key_vault_vm_tls_secret_id = "https://demo-vault-92033c51baf7.vault.azure.net/secrets/demo-vault-vm-tls/2e6e4d14d91e468794c7b3b326033b8b"
 
   # Resource group object in which resources will be deployed
   resource_group = {
     location = "eastus"
-    name     = "dev-vault"
+    name     = "demo-vault"
   }
 
   # Prefix for resource names
-  resource_name_prefix = "nsitlab"
+  resource_name_prefix = "nsit"
 
   # SSH public key (authentication to Vault servers)
   # Follow steps on private/public key creation (https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys)
-  ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDUXERoQ6ces2QIGuUawfirtiM+CByYc7Sbhrsc5xji0xZT4XL7B96hVimetsiIfLK30VdhhXY6i7B3NFd4+r8SdLNqFMA5J0p3YJCrjmBm+dprV+aDimpDV8niHnIenOCMnQ929QPWHGb+ILGwS87XSIQIUp3mrrePT6rIYHSHWqRgTaDcV9sFGYmgGjYRCCLfHJydkvFNDEsp0uw8Ef5TUauhYW2RqCSXZvIpKeqhyxL5FXE+YlZx9kLDg7Oc16mbffx0YL4YRXCfg7RPnzV6S59h9sqasu7XsV25chcPM7GOmMDuEB2nsdTpYWcR1ui8hL9eYVgDt3Twdj0+MzeyHXRuFW7P+aHvq+cVdJw/Saa90fxPcnZYOYaST34AFBdmakkOYggSY57NWALHcujnjU5ZHdAYpGoHTsE1Y/6e4F77h9PvTmdCxveR0TSuC/J6VbvIntOUXtZhfgCzo7vqaEHX3moVkFqSpRvN+NYZ3PiRuExUM/le2h2RAgvnoEfdowqDeq7geA2WP0g52j4Wq0izzhgMiIXwIG4/l1V/RKqM4nRflWQSvYnG2f1D5b4ZqPUCnX2255gHwVeRIjUC5H/YieMiXMnyVlz8Lkc/PcYA8RN+CrGkQNxq7yamwmj39qfwF3pDmPTwL3cr2SApmmDZV6RGIXoqv1G+ooeVKQ=="
+  ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQConv+gVbqBn9Gbo/4zN3FdOtV/RODKRZNoP+ArbsZdkyWqgc9Nyz6pcBfJNF4RwMlOfwsSOFvVDMYQ0akYEqEbD6Aa6gpOBGnN9Wk2NV/zA8hWyFjsmK9onF4WbLdEwYZN8hISyhL7l9Dx5vV0+92nt4GUnzhibwh9W94CzgABgpwW/hjl3pR1/2UzKpOw1w5DXYzzgXC0ThKCUHpj81v7C7FTQa3tsaU3mA9YiZRqr3OxIiVTEPhBc5Bd+kuJNtNFnEy1ph+9MwCRfDJwOMOvv6c6JOBxdzLIKqbcK4HGB5qErpO56IQVXhTFuxI+n3HAN17/cWCWsHiw+qIK/TfOeySiM0sV47eqvsQ9JixwRM0jkz2tFkG2hwcKXQvgG4fSekKgnb1LV8fAjY8/xcl1m5GsPp8ttG6j8U5KRG0OCzj7hAzG/hkZvkoexjCqMjqT1YWJFruiJcXet1R/pw6G2MHLROk62XvGIpjRa+qbGSAZxiyBlTS2VqB71poVmBdGvScPl6nxpjQmZ4hqIeMUpPFJiYAXNVa2WqGmWhAZvEtFDxlSLtYgoH7RsaYmv+EtFD7XS1/o/A5mKgZGXDrbZCehLxi7gZ7z/BoGStW/SLGrnAIIvyzsYrD8UL/tKJosHq53rgdLtvvQ2BZZJcJ93g+VHGVPkRhE0L4ozaxjGQ=="
 
   # Application Security Group IDs for Vault VMs
-  vault_application_security_group_ids = ["/subscriptions/f234c2d5-4a66-413f-89c7-ad0fde11d864/resourceGroups/dev-vault/providers/Microsoft.Network/applicationSecurityGroups/dev-vault"]
+  vault_application_security_group_ids = ["/subscriptions/f234c2d5-4a66-413f-89c7-ad0fde11d864/resourceGroups/demo-vault/providers/Microsoft.Network/applicationSecurityGroups/demo-vault"]
 
   # Path to the Vault Enterprise license file
   vault_license_filepath = "./vault.hclic"
@@ -78,4 +78,6 @@ module "vault-ent" {
   # Disk sizing for the scale set
   os_disk_type = "StandardSSD_LRS"
   os_disk_size = 256
+
+  vault_version = "1.15.1"
 }
